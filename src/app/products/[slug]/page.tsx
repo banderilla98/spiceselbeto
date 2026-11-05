@@ -5,6 +5,7 @@ import { products } from "@/data/products";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, CheckCircle2 } from "lucide-react";
+import AddToCartButton from "@/components/AddToCartButton";
 
 type ProductPageProps = {
   params: Promise<{ slug: string }>;
@@ -104,12 +105,16 @@ export default async function ProductPage({
               during checkout.
             </p>
 
-            <Link
-              href="/shop"
-              className="inline-block mt-8 bg-[#A85D3B] text-white px-8 py-4 text-xs tracking-widest hover:bg-[#87452B] transition-colors"
-            >
-              EXPLORE MORE SPICES
-            </Link>
+            <div className="flex flex-wrap items-center gap-4">
+  <AddToCartButton product={product} />
+
+  <Link
+    href="/shop"
+    className="mt-8 inline-block border border-[#A85D3B] px-8 py-4 text-xs tracking-widest text-[#A85D3B] transition-colors hover:bg-[#A85D3B] hover:text-white"
+  >
+    CONTINUE SHOPPING
+  </Link>
+</div>
           </div>
 
         </div>

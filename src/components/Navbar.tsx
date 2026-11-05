@@ -4,9 +4,11 @@
 import Link from "next/link";
 import { ShoppingBag, Menu, X } from "lucide-react";
 import { useState } from "react";
+import { useCart } from "@/components/CartProvider";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { cartCount } = useCart();
 
   const links = [
     { name: "HOME", href: "/" },
@@ -45,12 +47,18 @@ export default function Navbar() {
         {/* Cart and mobile menu */}
         <div className="flex items-center gap-5">
           <Link
-            href="/cart"
-            aria-label="Shopping cart"
-            className="text-[#432B20] hover:text-[#A85D3B] transition-colors"
-          >
-            <ShoppingBag size={21} strokeWidth={1.6} />
-          </Link>
+  href="/cart"
+  aria-label={`Shopping cart with ${cartCount} items`}
+  className="relative text-[#432B20] transition-colors hover:text-[#A85D3B]"
+>
+  <ShoppingBag size={21} strokeWidth={1.6} />
+
+  {cartCount > 0 && (
+    <span className="absolute -right-2 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#A85D3B] px-1 text-[10px] text-white">
+      {cartCount}
+    </span>
+  )}
+</Link>
 
           <button
             onClick={() => setMenuOpen(!menuOpen)}
