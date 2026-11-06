@@ -192,12 +192,12 @@ export default function CartPage() {
                 final order totals will be confirmed during checkout.
               </p>
 
-              <button
-                disabled
-                className="mt-8 w-full cursor-not-allowed bg-[#A85D3B] px-6 py-4 text-xs tracking-widest text-white opacity-60"
-              >
-                CHECKOUT COMING SOON
-              </button>
+              <Link
+  href="/checkout"
+  className="mt-8 block w-full bg-[#A85D3B] px-6 py-4 text-center text-xs tracking-widest text-white transition-colors hover:bg-[#87452B]"
+>
+  CONTINUE TO CHECKOUT
+</Link>
             </aside>
           </div>
         )}
