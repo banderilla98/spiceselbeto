@@ -1,54 +1,52 @@
-
-import { products } from "@/data/products";
-import ProductCard from "./ProductCard";
-import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { connection } from "next/server";
+import ProductCard from "@/components/ProductCard";
+import { getProducts } from "@/lib/products";
 
-export default function FeaturedProducts() {
-  const featuredProducts = products.filter(
-    (product) => product.featured
-  );
+export default async function FeaturedProducts() {
+  await connection();
+
+  const products = await getProducts();
+  const featuredProducts = products.filter((product) => product.featured);
 
   return (
-    <section
-      id="featured-products"
-      className="bg-[#FAF8F3] py-24 px-6"
-    >
-      <div className="max-w-7xl mx-auto">
-
-        {/* Section heading */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+    <section className="bg-[#FAF8F4] px-6 py-20 md:px-12">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-12 flex flex-col justify-between gap-5 md:flex-row md:items-end">
           <div>
-            <p className="text-xs tracking-[0.25em] text-[#A85D3B] mb-4">
-              OUR COLLECTION
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-[#A85D3B]">
+              Made for your kitchen
             </p>
 
-            <h2 className="text-3xl md:text-5xl font-semibold text-[#432B20]">
-              Explore Our Spices
+            <h2 className="font-serif text-4xl text-[#432B20] md:text-5xl">
+              Featured Spices
             </h2>
 
-            <p className="mt-4 text-sm text-[#85776B] max-w-lg">
-              Discover carefully selected spices that bring
-              warmth, aroma, and authentic flavor to your kitchen.
+            <p className="mt-4 max-w-lg text-sm leading-7 text-[#756456]">
+              Explore some of our favorite flavors and bring new inspiration
+              to your cooking.
             </p>
           </div>
 
           <Link
             href="/shop"
-            className="inline-flex items-center gap-3 text-xs tracking-widest text-[#A85D3B] hover:text-[#432B20] transition-colors"
+            className="text-sm font-semibold uppercase tracking-wider text-[#A85D3B] transition hover:text-[#432B20]"
           >
-            VIEW ALL PRODUCTS
-            <ArrowRight size={16} />
+            View all products →
           </Link>
         </div>
 
-        {/* Product grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {featuredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-
+        {featuredProducts.length > 0 ? (
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {featuredProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        ) : (
+          <p className="text-sm text-[#756456]">
+            New featured products are coming soon.
+          </p>
+        )}
       </div>
     </section>
   );

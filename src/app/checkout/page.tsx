@@ -129,8 +129,18 @@ export default function CheckoutPage() {
               </h3>
 
               <p className="mt-2 text-sm text-[#756456]">
-                {method === "shipping" ? "Shipping" : "Local Pickup"}
-              </p>
+  {method === "shipping"
+    ? "Shipping"
+    : "Local Pickup — Bakersfield, California"}
+</p>
+
+{method === "pickup" && (
+  <p className="mt-2 text-sm leading-6 text-[#756456]">
+    The exact pickup location and time will be arranged
+    after your order is placed. Please wait for confirmation
+    before traveling.
+  </p>
+)}
 
               {method === "shipping" && (
                 <p className="mt-2 text-sm leading-6 text-[#756456]">
@@ -286,12 +296,34 @@ export default function CheckoutPage() {
                       Local Pickup
                     </span>
                     <span className="mt-2 block text-xs text-[#756456]">
-                      Arrange to collect your order locally.
-                    </span>
+  Available in Bakersfield, California.
+</span>
                   </button>
                 </div>
               </div>
+              {method === "pickup" && (
+  <div className="border border-[#EAE3D8] bg-white p-6">
+    <div className="flex items-start gap-3">
+      <MapPin className="mt-1 shrink-0 text-[#A85D3B]" size={20} />
 
+      <div>
+        <h3 className="font-medium text-[#432B20]">
+          Local Pickup — Bakersfield, CA
+        </h3>
+
+        <p className="mt-2 text-sm leading-6 text-[#756456]">
+          Local pickup is available in Bakersfield, California.
+          After your order is placed, we will contact you to
+          arrange the exact pickup location and time.
+        </p>
+
+        <p className="mt-3 text-xs text-[#A85D3B]">
+          Please wait for pickup confirmation before traveling.
+        </p>
+      </div>
+    </div>
+  </div>
+)}
               {/* Shipping address */}
               {method === "shipping" && (
                 <div>

@@ -1,31 +1,51 @@
-
+import { connection } from "next/server";
+import { Suspense } from "react";
 import Navbar from "@/components/Navbar";
-import ShopCatalog from "@/components/ShopCatalog";
 import Footer from "@/components/Footer";
+import ShopCatalog from "@/components/ShopCatalog";
+import { getProducts } from "@/lib/products";
+
+async function ShopContent() {
+  await connection();
+
+  const products = await getProducts();
+
+  return <ShopCatalog products={products} />;
+}
 
 export default function ShopPage() {
   return (
-    <main className="bg-[#FAF8F3] min-h-screen">
+    <>
       <Navbar />
 
-      <section className="bg-[#F0E8DC] py-20 px-6 text-center">
-        <p className="text-xs tracking-[0.3em] text-[#A85D3B] mb-5">
-          THE SPICES BETO COLLECTION
-        </p>
+      <main>
+        <section className="bg-[#F5F0E8] px-6 py-20 text-center">
+          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-[#A85D3B]">
+            Explore our collection
+          </p>
 
-        <h1 className="text-4xl md:text-6xl font-semibold text-[#432B20]">
-          Our Spices
-        </h1>
+          <h1 className="font-serif text-4xl text-[#432B20] md:text-6xl">
+            Our Spices
+          </h1>
 
-        <p className="mt-5 text-sm text-[#756456] max-w-lg mx-auto">
-          Explore our selection of spices and discover new
-          flavors for your kitchen.
-        </p>
-      </section>
+          <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-[#756456]">
+            Discover flavorful spices and carefully selected ingredients
+            to bring something special to your kitchen.
+          </p>
+        </section>
 
-      <ShopCatalog />
+        <Suspense
+          fallback={
+            <section className="px-6 py-20 text-center">
+              Loading our spices...
+            </section>
+          }
+        >
+          <ShopContent />
+        </Suspense>
+      </main>
 
       <Footer />
-    </main>
+    </>
   );
 }

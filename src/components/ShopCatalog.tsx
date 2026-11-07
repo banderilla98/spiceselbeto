@@ -2,10 +2,14 @@
 "use client";
 
 import { useState } from "react";
-import { products } from "@/data/products";
 import ProductCard from "@/components/ProductCard";
+import type { Product } from "@/data/products";
 
-export default function ShopCatalog() {
+export default function ShopCatalog({
+  products,
+}: {
+  products: Product[];
+}) {
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   const categories = [
